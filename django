@@ -1,0 +1,9 @@
+Fixed #36869 -- Optimized MigrationGraph._generate_plan membership checks.
+Previously, `_generate_plan()` relied on list membership checks,
+resulting in quadratic behavior as the plan grew. On large migration
+graphs this became a significant performance bottleneck.
+
+This change uses `OrderedSet` for the plan, reducing the complexity to
+linear while preserving insertion order and behavior.
+
+Co-authored-by: Nick Pope <nick@nickpope.me.uk>
